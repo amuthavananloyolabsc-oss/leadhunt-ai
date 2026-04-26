@@ -1,0 +1,77 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String       @id @default(cuid())
+  email       String       @unique
+  name        String?
+  createdAt   DateTime     @default(now())
+  searchLogs  SearchLog[]
+  outreachLogs OutreachLog[]
+}
+
+model Lead {
+  id            String    @id @default(cuid())
+  source        String    // google_maps, justdial, indiamart, manual
+  name          String
+  city          String
+  category      String
+  phone         String?
+  email         String?
+  website       String?
+  address       String?
+  rating        Float?
+  reviewCount   Int?
+  hasWebsite    Boolean   @default(false)
+  websiteScore  Int?      // 0-100
+  aiScore       Int?      // 0-100
+  aiLabel       String?   // hot, warm, cold
+  status        String    @default("new") // new, contacted, replied, closed, follow_up
+  notes         String?
+  placeId       String?   @unique
+  lat           Float?
+  lng           Float?
+  hasWhatsApp   Boolean?
+  hasSocials    Boolean?
+  needType      String?   // no_website, redesign, seo, app, automation, hiring
+  pitchMessage  String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  outreachLogs  OutreachLog[]
+
+  @@index([city, category])
+  @@index([aiScore])
+  @@index([status])
+}
+
+model SearchLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  query     String
+  city      String?
+  category  String?
+  results   Int      @default(0)
+  createdAt DateTime @default(now())
+
+  user      User?    @relation(fields: [userId], references: [id])
+}
+
+model OutreachLog {
+  id        String   @id @default(cuid())
+  leadId    String
+  userId    String?
+  type      String   // whatsapp, email, instagram, call
+  message   String
+  createdAt DateTime @default(now())
+
+  lead      Lead     @relation(fields: [leadId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id])
+}
