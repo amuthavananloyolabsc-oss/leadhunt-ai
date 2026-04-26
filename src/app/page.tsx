@@ -40,7 +40,7 @@ export default function DashboardPage() {
   const noData = !data || data.totalLeads === 0;
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="p-4 md:p-8 space-y-4 md:space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -69,7 +69,7 @@ export default function DashboardPage() {
       {/* Stats Grid */}
       {data && (
         <>
-          <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-3 md:gap-4">
             <StatCard
               icon={<Users size={20} className="text-violet-400" />}
               label="Total Leads"

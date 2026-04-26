@@ -92,28 +92,27 @@ export default function LeadsPage() {
   };
 
   return (
-    <div className="p-8 space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-white">My Leads</h1>
-          <p className="text-slate-400 text-sm mt-1">
-            {total.toLocaleString()} total leads in your pipeline
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <button onClick={() => setShowFilters(!showFilters)} className="btn-secondary">
-            <Filter size={15} /> Filters {showFilters ? '▲' : '▼'}
-          </button>
-          <button onClick={handleExport} className="btn-secondary">
-            <Download size={15} /> Export CSV
-          </button>
-          <Link href="/search" className="btn-primary">
-            + Find More Leads
-          </Link>
-        </div>
-      </div>
-
+  <div className="p-4 md:p-8 space-y-4 md:space-y-6">
+  {/* Header */}
+  <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div>
+      <h1 className="text-xl md:text-2xl font-bold text-white">My Leads</h1>
+      <p className="text-slate-400 text-sm mt-1">
+        {total.toLocaleString()} total leads in your pipeline
+      </p>
+    </div>
+    <div className="flex gap-2 flex-wrap">
+      <button onClick={() => setShowFilters(!showFilters)} className="btn-secondary text-xs">
+        <Filter size={13} /> Filters
+      </button>
+      <button onClick={handleExport} className="btn-secondary text-xs">
+        <Download size={13} /> Export
+      </button>
+      <Link href="/search" className="btn-primary text-xs">
+        + Find Leads
+      </Link>
+    </div>
+  </div>
       {/* Search bar */}
       <div className="relative">
         <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
