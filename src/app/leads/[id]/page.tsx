@@ -202,7 +202,7 @@ export default function LeadDetailPage() {
             )}
             {lead.phone && (
               <a
-                href={`https://wa.me/${lead.phone.replace(/\D/g, '')}`}
+               href={`https://api.whatsapp.com/send?phone=91${lead.phone.replace(/\D/g, '').slice(-10)}`}
                 target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-2 px-3 py-2 bg-green-600/20 border border-green-500/30 text-green-400 rounded-lg text-xs hover:bg-green-600/30 transition-colors"
               >
@@ -321,8 +321,8 @@ export default function LeadDetailPage() {
                     <Copy size={14} /> Copy & Log Outreach
                   </button>
                   {activeTab === 'whatsapp' && lead.phone && (
-                    <a
-                      href={`https://wa.me/${lead.phone.replace(/\D/g, '')}?text=${encodeURIComponent(activeTemplate.message)}`}
+                    <ahref={`https://api.whatsapp.com/send?phone=91${lead.phone.replace(/\D/g, '').slice(-10)}&text=${encodeURIComponent(activeTemplate.message)}`}
+                      
                       target="_blank" rel="noopener noreferrer"
                       onClick={() => logOutreach('whatsapp', activeTemplate.message)}
                       className="btn-secondary"
