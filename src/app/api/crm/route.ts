@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 export async function PATCH(req: NextRequest) {
   try {
@@ -24,11 +25,14 @@ export async function PATCH(req: NextRequest) {
 }
 
 export async function GET() {
-  const pipeline = await prisma.lead.groupBy({
-    by: ['status'],
-    _count: { id: true },
-    orderBy: { status: 'asc' },
-  });
-
-  return NextResponse.json({ pipeline });
+  try {
+    const pipeline = await prisma.lead.groupBy({
+      by: ['status'],
+      _count: { id: true },
+      orderBy: { status: 'asc' },
+    });
+    return NextResponse.json({ pipeline });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }
