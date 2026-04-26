@@ -1,8 +1,8 @@
-// src/app/api/crm/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-// Bulk status update
+export const dynamic = 'force-dynamic';
+
 export async function PATCH(req: NextRequest) {
   try {
     const body = await req.json();
@@ -23,7 +23,6 @@ export async function PATCH(req: NextRequest) {
   }
 }
 
-// Get CRM pipeline stats
 export async function GET() {
   const pipeline = await prisma.lead.groupBy({
     by: ['status'],
